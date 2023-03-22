@@ -1,0 +1,52 @@
+<form id="productForm" class="formularioAddProduct">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description">
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price">
+    </div>
+    <div class="form-group">
+        <label for="thumbnail">Thumbnail (example: ./img/nombreImagen.jpg)</label>
+        <input type="text" class="form-control" id="thumbnail">
+    </div>
+    <div class="form-group">
+        <label for="code">Code</label>
+        <input type="text" class="form-control" id="code">
+    </div>
+    <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" class="form-control" id="stock">
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar</button>
+</form>
+
+<div class="productsCardsContainer">
+    <div id="productsCard" class="productsCardClass row">
+
+        {{!-- Aqui van los productos --}}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js"
+        integrity="sha512-rwu37NnL8piEGiFhe2c5j4GahN+gFsIn9k/0hkRY44iz0pc81tBNaUN56qF8X4fy+5pgAAgYi2C9FXdetne5sQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+    <script src="js/products.js"></script>
+
+</div>
+
+
+<div id="contenedorBotonesPaginas" class="centrarBotones">
+
+</div>
