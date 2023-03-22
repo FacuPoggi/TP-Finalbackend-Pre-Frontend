@@ -10,7 +10,7 @@ import { engine } from 'express-handlebars';
 import * as path from 'path'
 import routerChat from "./routes/chat.routes.js";
 import productManager from "./dao/ManagersGeneration/productManager.js";
-import MongoStore from "connect-mongo";
+
 
 
 const app = express()
@@ -18,18 +18,6 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-/* 
-MongoDB Sessions
-app.use(session({
-    store: MongoStore.create({
-        mongoUrl: process.env.URLMONGODB,
-        mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-        ttl: 30
-    }),
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
-})) */
 
 //Handlebars
 app.engine("handlebars", engine());
