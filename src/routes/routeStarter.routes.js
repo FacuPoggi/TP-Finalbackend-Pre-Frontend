@@ -20,7 +20,7 @@ routeStarter.get('/products', async (req, res) => {
 })
 
 
-routeStarter.get('/cart/:cid', async (req, res) => {
+routeStarter.get('/carts/:cid', async (req, res) => {
     const resultado = await cartManager.getElementById(req.params.cid)
     if (resultado != undefined) {
         res.send(resultado);
