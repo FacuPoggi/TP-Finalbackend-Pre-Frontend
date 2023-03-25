@@ -50,20 +50,20 @@ export class productManagerMongoDB extends ManagerMongoDB {
     constructor() {
         super(url, "products", productSchema)
     }
-    async paginate(filtro,opciones){
+    async paginate(filtro, opciones) {
         this.setConnection();
-        try{
-            return await this.model.paginate(filtro,opciones)
-        }catch(error){
-            return error;
+        try {
+            return await this.model.paginate(filtro, opciones)
+        } catch (error) {
+            throw error;
         }
     }
-    async aggregate(opciones){
+    async aggregate(opciones) {
         this.setConnection();
-        try{
+        try {
             return await this.model.aggregate(opciones)
-        }catch(error){
-            return error;
+        } catch (error) {
+            throw error;
         }
     }
 }

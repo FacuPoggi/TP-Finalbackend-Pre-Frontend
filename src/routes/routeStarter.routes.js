@@ -23,13 +23,13 @@ routeStarter.get('/products', async (req, res) => {
 routeStarter.get('/carts/:cid', async (req, res) => {
     const resultado = await cartManager.getElementById(req.params.cid)
     if (resultado != undefined) {
-        res.send(resultado);
+        res.status(200).json(resultado)
     } else {
-        res.send("No existe el carrito o simplemente está vacio")
+        res.status(200).json({
+            message: "No existe el carrito o simplemente esta vacio"
+        })
     }
-
 })
-
 
 
 export default routeStarter;

@@ -30,7 +30,9 @@ export class cartManagerMongoDB extends ManagerMongoDB {
     async delCartItems(id){
         let cart = await this.getElementById(id);
         if (cart==null){
-            res.send("El carrito con el id ingresado no se encuentra");
+            res.status(204).json({
+                message: "El carrito con el id ingresado no se encuentra" 
+            })
         }else{
             cart.products=[]
             await this.updateElement(id,cart)

@@ -16,16 +16,16 @@ export class ManagerMongoDB {
             await mongoose.connect(this.#url)
             console.log("DB is connected")
         } catch (error) {
-            return error
+            throw error
         }
     }
 
-    async addElements(elements) { //Agrego 1 o varios elementos
+    async addElements(elements) {
         this.setConnection()
         try {
             return await this.model.insertMany(elements)
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -34,16 +34,16 @@ export class ManagerMongoDB {
         try {
             return await this.model.find()
         } catch (error) {
-            return error
+            throw error
         }
     }
 
-    async getElementById(id) { //Agrego 1 o varios elementos
+    async getElementById(id) {
         this.setConnection()
         try {
             return await this.model.findById(id)
         } catch (error) { 
-            return undefined
+            throw error
         }
     }
 
@@ -52,7 +52,7 @@ export class ManagerMongoDB {
         try {
             return await this.model.findByIdAndUpdate(id, info)
         } catch (error) {
-            return error
+            throw error
         }
     }
 
@@ -61,7 +61,7 @@ export class ManagerMongoDB {
         try {
             return await this.model.findByIdAndDelete(id)
         } catch (error) {
-            return error
+            throw error
         }
     }
 
