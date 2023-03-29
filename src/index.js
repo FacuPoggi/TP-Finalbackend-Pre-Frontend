@@ -3,33 +3,44 @@ import express from "express";
 import { Server } from "socket.io";
 import { getmessageManagers, getproductManagers} from "./dao/daoManager.js";
 import { __dirname, __filename } from "./path.js";
-import rutasEnInicio from "./routes/routeStarter.routes.js";
-import routerProduct from "./routes/products.routes.js";
-import routerCart from "./routes/cart.routes.js";
+import session from 'express-session'
+import multer from 'multer'
 import { engine } from 'express-handlebars';
 import * as path from 'path'
-import routerChat from "./routes/chat.routes.js";
-import productManager from "./dao/ManagersGeneration/productManager.js";
-import MongoStore from "connect-mongo";
+import MongoStore from 'connect-mongo'
+import cookieParser from 'cookie-parser'
+import router from "./routes/index.routes.js";
+
 
 
 const app = express()
 
+app.use(cookieParser(process.env.SIGNED_COOKIE))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-/* 
-MongoDB Sessions
 app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.URLMONGODB,
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-        ttl: 30
+        ttl: 200
     }),
+    //store: new fileStore({ path: './sessions', ttl: 1000, retries: 1 }),
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
-})) */
+}))
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'src/public/img')
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}${file.originalname}`)
+    }
+})
+
+const upload = multer({ storage: storage })
+
+
 
 //Handlebars
 app.engine("handlebars", engine());
@@ -63,44 +74,8 @@ io.on("connection", async (socket) => {
     messageManager.getElements().then((mensajes) => {
         socket.emit("allMessages", mensajes)
     })
-
-
-
-
-
-    // productManager.getElements().then((products) => {
-    //     socket.emit("getProducts", products)
-    // })
-    // socket.on("addProduct", async (info) => {
-    //     //Si se quiere agregar elementos al archivo, colocar "productManager.devolverArrayProductos()" en lugar de [info]
-    //     productManager.addElements([info]).then(() => {
-    //         productManager.getElements().then((products) => {
-    //         socket.emit("getProducts", products)
-    //     })
-    // })
-    // })
-    
-
-
-
-
-    
-    // socket.on("deleteProduct", async id=>{
-    //     productManager.deleteElement(id).then(() => {
-    //         productManager.getElements().then((products) => {
-    //         socket.emit("getProducts", products)
-    //         })
-    //     })
-    // })
-
 })
 
 //Routes
-app.use('/', rutasEnInicio)
-app.use('/chat', routerChat)
-app.use('/', express.static(__dirname + '/public'))
-app.use('/api/products', routerProduct)
-app.use('/products', routerProduct)
-app.use('/api/carts', routerCart)
-app.use('/carts', routerCart)
-//app.use("/products", routerProductsPaginate)
+app.use('/',router) 
+// app.use("/products",routerProductsPaginate)

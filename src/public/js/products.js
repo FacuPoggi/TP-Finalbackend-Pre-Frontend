@@ -27,7 +27,6 @@ async function renderProducts() {
         }
         const response = await fetch(urlFetch);
         const products = await response.json();
-        console.log(products)
         products.payload.forEach(product => {
             document.getElementById("productsCard").innerHTML +=
                 `
@@ -117,11 +116,11 @@ async function botonEnviar() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                }, //Sin estas lineas no agrega
+                },
                 body: JSON.stringify(newProduct),
             });
             document.getElementById("productsCard").innerHTML = ""
-            renderProducts(); //Para recargar la pagina
+            renderProducts();
         } catch (error) {
             console.log(error);
         }
