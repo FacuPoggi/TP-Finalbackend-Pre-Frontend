@@ -10,6 +10,8 @@ import * as path from 'path'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import router from "./routes/index.routes.js";
+import passport from 'passport'
+import initializePassport from './config/passport.js'
 
 
 
@@ -22,7 +24,7 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.URLMONGODB,
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-        ttl: 200
+        ttl: 100
     }),
     //store: new fileStore({ path: './sessions', ttl: 1000, retries: 1 }),
     secret: process.env.SESSION_SECRET,
@@ -40,6 +42,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+
+//Passport
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 //Handlebars

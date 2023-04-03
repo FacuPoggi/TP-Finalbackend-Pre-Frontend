@@ -8,7 +8,6 @@ const routerSession = Router()
 
 routerSession.get('/login', async (req, res) => {
     const {message} = req.body;
-    console.log(message)
     res.render("login", {
         titulo: "Trabajo Final",
         // message:req.body.message
