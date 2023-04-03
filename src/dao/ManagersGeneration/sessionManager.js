@@ -7,22 +7,25 @@ export const loginTest = async (req, res) => {
     try {
         if (await userManager.checkLogin(email, password) == "Login exitoso") {
             const usuario = await userManager.getElementByEmail(email);
-            req.session.first_name = usuario.first_name; //Para mostrar el nombre y el apellido, no mas datos ya que me parece mejor que sean personales y no mostrarlos 
+            req.session.first_name = usuario.first_name;
             req.session.last_name = usuario.last_name;
             req.session.role = usuario.rol;
             req.session.login = true
             if (usuario.rol.toLowerCase() == "admin") {
-                res.redirect('/products')
+                res.status(200).json({msg: 'mensaje de respuesta'})
+                /* res.redirect('/products') */
             } else if (usuario.rol.toLowerCase() == "user") {
-                res.redirect('/products')//Se podría renderizar algo diferente en caso de ser administrador, no se puede registrar desde el programa como admin
+                res.status(200).json({msg: 'mensaje de respuesta'})
+                /* res.redirect('/products') */
             } else {
                 console.error("Rol no valido")
             }
 
         } else {
-            res.redirect("/api/session/login", 500, {
+            res.status(401).json({ msg: 'login incorrecto'})
+            /* res.redirect("/api/session/login", 500, {
                 message: "Login incorrecto"
-            })
+            }) */
         }
 
     } catch (error) {
